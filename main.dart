@@ -69,16 +69,12 @@ class _MyAppState extends State<MyApp> {
               child: Text('基本信息'),
             ),
           )),
-          () {
-            if (_shouldPinned) {
-              return SliverPersistentHeader(
+          _shouldPinned
+              ? SliverPersistentHeader(
                 delegate: _Header(),
                 pinned: _shouldPinned,
-              );
-            } else {
-              return SliverToBoxAdapter(child: Container());
-            }
-          }(),
+              )
+              : SliverToBoxAdapter(child: Container()),
           SliverList(
             delegate: SliverChildListDelegate([
               Container(
@@ -86,13 +82,9 @@ class _MyAppState extends State<MyApp> {
                 height: 500,
                 child: const Center(child: Text('相关商品列表'),),
               ),
-              () {
-                if (!_shouldPinned) {
-                  return _getHeadRow();
-                } else {
-                  return Container();
-                }
-              }(),
+              !_shouldPinned
+                  ? _getHeadRow()
+                  : Container(),
               Container(
                 key: _key,
                 color: Colors.teal,
